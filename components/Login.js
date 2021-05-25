@@ -11,15 +11,22 @@ export default class Login extends Component {
     }
   }
 
-  singIn = async () => {
-    try {
-      let response = await auth().signInWithEmailAndPassword(this.state.email, this.state.password)
-      if (response && response.user) {
-        Alert.alert("Success ✅", "Signed In successfully")
-      }
-    } catch (e) {
-      alert("SignIn failed");
-    }
+  singIn = () => {
+    if(this.state.email === '' && this.state.password === '') {
+      Alert.alert('Enter details to signin!')
+    }else {
+      auth()
+      .signInWithEmailAndPassword(this.state.email, this.state.password)
+      .then((res) => {
+          Alert.alert("Success ✅", "Signed In successfully ........")
+          this.props.navigation.navigate('Home')
+          this.setState({
+            email: '', 
+            password: ''
+          })
+        })
+        .catch(error => alert("SignIn failed"));
+  }
   }
 
   updateInputVal = (val, prop) => {

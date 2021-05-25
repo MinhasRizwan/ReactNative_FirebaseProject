@@ -12,14 +12,25 @@ export default class Signup extends Component {
         }
       }
 
-    registerUser = async () => {
-        try {
-         let response =  await auth().createUserWithEmailAndPassword(this.state.email, this.state.password);
-          if(response){
-            Alert.alert("Success ✅", "Registered successfully")
-          }
-        } catch (e) {
-          alert("Signed Up failed");
+    registerUser = () => {
+        if(this.state.email === '' && this.state.password === '') {
+            Alert.alert('Enter details to signup!')
+        }else {
+            auth()
+            .createUserWithEmailAndPassword(this.state.email, this.state.password)
+            .then((res) => {
+                res.user.updateProfile({
+                  displayName: this.state.userName
+                })
+                Alert.alert("Success ✅", "Registered successfully")
+                this.setState({
+                  displayName: '',
+                  email: '', 
+                  password: ''
+                })
+                this.props.navigation.navigate('Login')
+              })
+              .catch(error => alert("Signed Up failed"));
         }
     }
 
