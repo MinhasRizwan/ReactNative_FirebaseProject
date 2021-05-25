@@ -1,26 +1,57 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
+import auth from "@react-native-firebase/auth"
 
 export default class Signup extends Component {
+    constructor() {
+        super();
+        this.state = { 
+          userName: '',
+          email: '', 
+          password: ''
+        }
+      }
+
+    registerUser = async () => {
+        try {
+         let response =  await auth().createUserWithEmailAndPassword(this.state.email, this.state.password);
+          if(response){
+            Alert.alert("Success ✅", "Registered successfully")
+          }
+        } catch (e) {
+          alert("Signed Up failed");
+        }
+    }
+
+    updateInputVal = (val, prop) => {
+        const state = this.state;
+        state[prop] = val;
+        this.setState(state);
+      }
+
     render() {
         return (
             <View style={styles.container}>
                 <TextInput
                     style={styles.inputStyle}
                     placeholder= "Name"
+                    onChangeText={(val) => this.updateInputVal(val, 'userName')}
                 />
                 <TextInput
                     style={styles.inputStyle}
                     placeholder= "Email"
+                    onChangeText={(val) => this.updateInputVal(val, 'email')}
                 />
                 <TextInput
                     style={styles.inputStyle}
                     placeholder= "Password"
                     secureTextEntry={true}
+                    onChangeText={(val) => this.updateInputVal(val, 'password')}
                 />
                 <Button
                     color="#3740FE"
                     title="Signup"
+                    onPress={() => this.registerUser()}
                 />
                 <Text
                     style={styles.loginText}
