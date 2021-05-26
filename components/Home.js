@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
 import auth from "@react-native-firebase/auth"
 
+//tODO: Replace class component with functional component
 export default class Login extends Component {
   signOut = () => {
     auth().signOut().then(() => {
@@ -13,6 +14,9 @@ export default class Login extends Component {
 
   render() {
     return (
+        // tODO: fetch user name in some other functions , may be in componentDidMount
+        // Todo: Use touchable opacity for buttons
+        // Todo: Improve the UI
         <View style={styles.container}>
             <Text style = {styles.textStyle}>
                 Hello, {auth().currentUser.displayName}

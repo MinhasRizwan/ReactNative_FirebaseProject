@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
 import auth from "@react-native-firebase/auth"
 
+//tODO: Replace class component with functional component
 export default class Signup extends Component {
     constructor() {
         super();

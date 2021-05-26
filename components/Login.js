@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
 import auth from "@react-native-firebase/auth"
 
+//tODO: Replace class component with functional component
 export default class Login extends Component {
   constructor() {
     super();
@@ -86,15 +87,5 @@ const styles = StyleSheet.create({
     color: '#3740FE',
     marginTop: 25,
     textAlign: 'center'
-  },
-  preloader: {
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff'
   }
 });
