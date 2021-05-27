@@ -16,6 +16,8 @@ function Login({navigation}) {
       .signInWithEmailAndPassword(emailInput, passwordInput)
       .then((res) => {
           Alert.alert("Success ✅", "Signed In successfully")
+          setEmailInput('')
+          setPasswordInput('')
           navigation.navigate('Home')
         })
         .catch(error => alert("SignIn failed"));
@@ -27,12 +29,14 @@ function Login({navigation}) {
       <TextInput
         style={styles.inputStyle}
         placeholder="Email"
+        value={emailInput}
         onChangeText={(val) => setEmailInput(val)}
       />
       <TextInput
         style={styles.inputStyle}
         placeholder="Password"
         maxLength={15}
+        value={passwordInput}
         secureTextEntry={true}
         onChangeText={(val) => setPasswordInput(val)}
       />   

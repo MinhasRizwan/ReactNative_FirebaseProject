@@ -21,6 +21,9 @@ function Signup ({navigation}) {
                   displayName: nameInput
                 })
                 Alert.alert("Success ✅", "Registered successfully")
+                setNameInput('')
+                setEmailInput('')
+                setPasswordInput('')
                 navigation.navigate('Login')
               })
               .catch(error => alert("Signed Up failed"));
@@ -32,16 +35,19 @@ function Signup ({navigation}) {
             <TextInput
                 style={styles.inputStyle}
                 placeholder= "Name"
+                value={nameInput}
                 onChangeText={(val) => setNameInput(val)}
             />
             <TextInput
                 style={styles.inputStyle}
                 placeholder= "Email"
+                value={emailInput}
                 onChangeText={(val) => setEmailInput(val)}
             />
             <TextInput
                 style={styles.inputStyle}
                 placeholder= "Password"
+                value= {passwordInput}
                 secureTextEntry={true}
                 onChangeText={(val) => setPasswordInput(val)}
             />
