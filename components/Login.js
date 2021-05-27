@@ -1,69 +1,51 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
-import auth from "@react-native-firebase/auth"
+import { StyleSheet, Text, View, TextInput, Button, Alert} from 'react-native';
+import auth from "@react-native-firebase/auth";
+import {useState} from 'react';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-//tODO: Replace class component with functional component
-export default class Login extends Component {
-  constructor() {
-    super();
-    this.state = { 
-      email: '', 
-      password: ''
-    }
-  }
+function Login({navigation}) {
+  const [emailInput, setEmailInput] = useState('');
+  const [passwordInput, setPasswordInput] = useState('');
 
-  singIn = () => {
-    if(this.state.email === '' && this.state.password === '') {
+  const loginUser = () => {
+    if(emailInput === '' && passwordInput === '') {
       Alert.alert('Enter details to signin!')
     }else {
       auth()
-      .signInWithEmailAndPassword(this.state.email, this.state.password)
+      .signInWithEmailAndPassword(emailInput, passwordInput)
       .then((res) => {
-          Alert.alert("Success ✅", "Signed In successfully ........")
-          this.props.navigation.navigate('Home')
-          this.setState({
-            email: '', 
-            password: ''
-          })
+          Alert.alert("Success ✅", "Signed In successfully")
+          navigation.navigate('Home')
         })
         .catch(error => alert("SignIn failed"));
-  }
-  }
-
-  updateInputVal = (val, prop) => {
-    const state = this.state;
-    state[prop] = val;
-    this.setState(state);
+    }
   }
 
-  render() {
-    return (
-      <View style={styles.container}>  
-        <TextInput
-          style={styles.inputStyle}
-          placeholder="Email"
-          onChangeText={(val) => this.updateInputVal(val, 'email')}
-        />
-        <TextInput
-          style={styles.inputStyle}
-          placeholder="Password"
-          maxLength={15}
-          secureTextEntry={true}
-          onChangeText={(val) => this.updateInputVal(val, 'password')}
-        />   
-        <Button
-          color="#3740FE"
-          title="Signin"
-          onPress={() => this.singIn()}
-        />   
-        <Text 
-          style={styles.loginText}
-          onPress={() => this.props.navigation.navigate('SignUp')}>
-          Don't have account? Click here to Signup
-        </Text>                          
-      </View>
-    );
-  }
+  return (
+    <View style={styles.container}>  
+      <TextInput
+        style={styles.inputStyle}
+        placeholder="Email"
+        onChangeText={(val) => setEmailInput(val)}
+      />
+      <TextInput
+        style={styles.inputStyle}
+        placeholder="Password"
+        maxLength={15}
+        secureTextEntry={true}
+        onChangeText={(val) => setPasswordInput(val)}
+      />   
+      <TouchableOpacity style={styles.btnContainer} onPress={loginUser}>
+        <Text style={styles.signinBtn}>SignIn</Text>
+      </TouchableOpacity>   
+      <Text 
+        style={styles.loginText}
+        onPress={() => navigation.navigate('SignUp')}>
+        Don't have account? Click here to Signup
+      </Text>                          
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -87,5 +69,19 @@ const styles = StyleSheet.create({
     color: '#3740FE',
     marginTop: 25,
     textAlign: 'center'
+  },
+  signinBtn: {
+    color: '#fff',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 16
+  },
+  btnContainer: {
+    backgroundColor: '#d02683',
+    marginTop: 40,
+    padding: 8,
+    borderRadius: 8
   }
 });
+
+export default Login;
