@@ -1,9 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Alert} from 'react-native';
+import { StyleSheet, Text, View} from 'react-native';
 import { connect } from 'react-redux'
-import Firebase from '../config/Firebase.js'
 
-function Home ({navigation, user}) {
+function News ({navigation, user}) {
     
   return (
       // tODO: fetch user name in some other functions , may be in componentDidMount
@@ -11,7 +10,7 @@ function Home ({navigation, user}) {
       // Todo: Improve the UI
       <View style={styles.container}>
           <Text style = {styles.textStyle}>
-              Hello, {Firebase.auth().currentUser.email}
+              Today's Top News
           </Text>
     </View>
   );
@@ -38,4 +37,4 @@ const mapStateToProps = state => {
 	}
 }
 
-export default connect(mapStateToProps)(Home)
+export default connect(mapStateToProps)(News)

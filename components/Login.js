@@ -1,46 +1,29 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, TextInput, Button, Alert} from 'react-native';
-import auth from "@react-native-firebase/auth";
-import {useState} from 'react';
+import { bindActionCreators } from 'redux'
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { updateEmail, updatePassword, login, getUser} from "../actions/user";
+import { connect } from 'react-redux'
 
-function Login({navigation}) {
-  const [emailInput, setEmailInput] = useState('');
-  const [passwordInput, setPasswordInput] = useState('');
-
-  const loginUser = () => {
-    if(emailInput === '' && passwordInput === '') {
-      Alert.alert('Enter details to signin!')
-    }else {
-      auth()
-      .signInWithEmailAndPassword(emailInput, passwordInput)
-      .then((res) => {
-          Alert.alert("Success ✅", "Signed In successfully")
-          setEmailInput('')
-          setPasswordInput('')
-          navigation.navigate('Home')
-        })
-        .catch(error => alert("SignIn failed"));
-    }
-  }
+function Login({navigation, user, updateEmail, updatePassword, login, getUser}) {
 
   return (
     <View style={styles.container}>  
       <TextInput
         style={styles.inputStyle}
         placeholder="Email"
-        value={emailInput}
-        onChangeText={(val) => setEmailInput(val)}
+        value={user.email}
+        onChangeText={(val) => updateEmail(val)}
       />
       <TextInput
         style={styles.inputStyle}
         placeholder="Password"
         maxLength={15}
-        value={passwordInput}
+        value={user.password}
         secureTextEntry={true}
-        onChangeText={(val) => setPasswordInput(val)}
+        onChangeText={(val) => updatePassword(val)}
       />   
-      <TouchableOpacity style={styles.btnContainer} onPress={loginUser}>
+      <TouchableOpacity style={styles.btnContainer} onPress={login}>
         <Text style={styles.signinBtn}>SignIn</Text>
       </TouchableOpacity>   
       <Text 
@@ -88,4 +71,17 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Login;
+const mapStateToProps = state => {
+	return {
+		user: state.user
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({ updateEmail, updatePassword, login, getUser }, dispatch)
+}
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Login)
