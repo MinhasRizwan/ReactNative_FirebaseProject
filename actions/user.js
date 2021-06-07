@@ -71,3 +71,7 @@ export const signup = () => {
 		}
 	}
 }
+
+export const getNews = () => ({
+	type: 'GET_NEWS',
+});

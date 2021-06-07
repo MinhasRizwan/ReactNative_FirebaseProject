@@ -1,4 +1,5 @@
 import * as React from 'react';
+import createSagaMiddleware from 'redux-saga'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -13,12 +14,17 @@ import Firebase from './config/Firebase'
 import {useEffect, useState} from 'react';
 import Setting from './components/Setting';
 import News from './components/News';
+import rootSaga from './sagas';
+
+const sagaMiddleware = createSagaMiddleware();
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator()
 
-const middleware = applyMiddleware(thunkMiddleware)
-const store = createStore(reducer, middleware)
+//Todo: Replace thunkMiddleware from here with sagaMiddleware
+const store = createStore(reducer, applyMiddleware(sagaMiddleware, thunkMiddleware))
+
+sagaMiddleware.run(rootSaga)
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
