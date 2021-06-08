@@ -15,6 +15,7 @@ import {useEffect, useState} from 'react';
 import Setting from './components/Setting';
 import News from './components/News';
 import rootSaga from './sagas';
+import Animals from './components/Animals';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -69,6 +70,7 @@ function App() {
             }}>
             <Tab.Screen name="Home" component={Home}/>
             <Tab.Screen name="News" component={News}/>
+            <Tab.Screen name="Animals" component={Animals}/>
             <Tab.Screen name="Setting" component={Setting}/>
           </Tab.Navigator>
         )}

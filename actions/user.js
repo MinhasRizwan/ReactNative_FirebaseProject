@@ -6,6 +6,9 @@ export const UPDATE_PASSWORD = 'UPDATE_PASSWORD'
 export const LOGIN = 'LOGIN'
 export const SIGNUP = 'SIGNUP'
 
+export const API_CALL_REQUEST_ANIMAL = 'FETCH_ANIMAL'
+export const API_CALL_SUCCESS_ANIMAL = 'ANIMAL_RECEIVED'
+
 // actions
 
 export const updateEmail = email => {
@@ -74,4 +77,8 @@ export const signup = () => {
 
 export const getNews = () => ({
 	type: 'GET_NEWS',
+});
+
+export const getAnimal = () => ({
+	type: API_CALL_REQUEST_ANIMAL,
 });

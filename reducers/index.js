@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { login, LOGIN, SIGNUP, UPDATE_EMAIL, UPDATE_PASSWORD} from '../actions/user'
+import { login, LOGIN, SIGNUP, UPDATE_EMAIL, UPDATE_PASSWORD, API_CALL_REQUEST_ANIMAL, API_CALL_SUCCESS_ANIMAL} from '../actions/user'
 
 const user = (state = {}, action) => {
 	switch (action.type) {
@@ -17,6 +17,12 @@ const user = (state = {}, action) => {
 			return { ...state, email: action.payload }
 		case UPDATE_PASSWORD:
 			return { ...state, password: action.payload }
+		case API_CALL_REQUEST_ANIMAL:
+			console.log("Reducer action: fetch animal")
+			return { ...state, fetching: true, error: null };
+		case API_CALL_SUCCESS_ANIMAL:
+			console.log("Reducer action: fetch animal success : " + action.dog)
+      		return { ...state, fetching: false, dog: action.dog };
 		default:
 			return state
 	}
